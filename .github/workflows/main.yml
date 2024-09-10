@@ -11,4 +11,4 @@ jobs:
     steps:
       - name: Trigger Workflow
         run: |
-          curl  -X POST  -H "Authorization: token ${{ secrets.GH_TOKEN }}"  -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/cbdb-project/named-entities-for-premodern-chinese-history-research/actions/workflows/57137209/dispatches  -d '{"ref": "main"}'
+          curl  -X POST  -H "Authorization: token ${{ secrets.cbdb_sqlite_token }}"  -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/cbdb-project/named-entities-for-premodern-chinese-history-research/actions/workflows/57137209/dispatches  -d '{"ref": "main"}'
