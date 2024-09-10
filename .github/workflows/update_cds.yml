@@ -1,0 +1,15 @@
+name: Update cbdb-data-summarization
+
+on:
+  push:
+    paths:
+      - 'latest.7z'
+  workflow_dispatch: 
+
+jobs:
+  workflow_dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Workflow
+        run: |
+          curl  -X POST  -H "Authorization: token ${{ secrets.GH_TOKEN }}"  -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/cbdb-project/cbdb-data-summarization/actions/workflows/67052455/dispatches  -d '{"ref": "main"}'

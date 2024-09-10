@@ -1,0 +1,14 @@
+name: Update biog_ref
+
+on:
+  push:
+    paths:
+      - 'latest.7z'
+
+jobs:
+  workflow_dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Workflow
+        run: |
+          curl  -X POST  -H "Authorization: token ${{ secrets.GH_TOKEN }}"  -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/cbdb-project/biogref_CBDB/actions/workflows/59447307/dispatches -d '{"ref": "master"}'
