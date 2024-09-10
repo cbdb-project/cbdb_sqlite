@@ -1,3 +1,5 @@
+# GitHub Actions Backup
+
 name: Update NECHR
 
 on:
@@ -16,12 +18,3 @@ jobs:
           -H "Accept: application/vnd.github.v3+json" \
           https://api.github.com/repos/cbdb-project/named-entities-for-premodern-chinese-history-research/actions/workflows/57137209/dispatches \
           -d '{"ref": "main"}'
-
-      - name: Check Access to GH_TOKEN
-        run: |
-          if [[ -z "${{ secrets.GH_TOKEN }}" ]]; then
-            echo "GH_TOKEN is not accessible."
-            exit 1
-          else
-            echo "GH_TOKEN is accessible."
-          fi
