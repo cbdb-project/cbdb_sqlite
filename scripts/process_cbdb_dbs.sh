@@ -108,4 +108,4 @@ announce "Comparing databases"
 python3 compare_db_tables.py CBDB_20240820.db CBDB_20250520.db
 
 # generate sqldiff file (outputs a 1.4GB sql_diff.sql file)
-# sqlite3 --primarykey CBDB_20240820.db CBDB_20250520.db > sql_diff.sql
+# sqldiff --primarykey CBDB_20240820.db CBDB_20250520.db > sql_diff.sql
