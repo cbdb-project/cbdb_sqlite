@@ -54,43 +54,49 @@ ensure_absent() {
     fi
 }
 
+TARGET_DBS=("CBDB_20250520.db" "CBDB_20240820.db")
+
 announce "Ensuring output databases are absent"
-ensure_absent "CBDB_20250520.db"
-ensure_absent "CBDB_20240820.db"
+for db in "${TARGET_DBS[@]}"; do
+    ensure_absent "$db"
+done
 
-LATEST_URL="https://huggingface.co/datasets/cbdb/cbdb-sqlite/resolve/main/latest.7z"
-HIST_URL_BASE="https://huggingface.co/datasets/cbdb/cbdb-sqlite/resolve/main/history/CBDB_20240820"
+download_release() {
+    local db_name="$1"
+    shift
+    local urls=("$@")
+    local label="${db_name%.db}"
 
-latest_archive="$TMP_DIR/latest.7z"
-announce "Downloading latest CBDB archive"
-download_file "$LATEST_URL" "$latest_archive"
+    if ((${#urls[@]} == 0)); then
+        printf 'Error: no archive URLs provided for %s\n' "$db_name" >&2
+        exit 1
+    fi
 
-announce "Extracting latest archive"
-extract_archive "$latest_archive" "$SCRIPT_DIR" &
-extract_latest_pid=$!
+    announce "Downloading ${label} archive"
+    local archive_paths=()
+    for url in "${urls[@]}"; do
+        local destination="$TMP_DIR/${url##*/}"
+        download_file "$url" "$destination"
+        archive_paths+=("$destination")
+    done
 
-announce "Downloading CBDB_20240820 archive parts"
-part1="$TMP_DIR/CBDB_20240820.7z.001"
-part2="$TMP_DIR/CBDB_20240820.7z.002"
-download_file "$HIST_URL_BASE/CBDB_20240820.7z.001" "$part1" &
-pid_part1=$!
-download_file "$HIST_URL_BASE/CBDB_20240820.7z.002" "$part2" &
-pid_part2=$!
+    announce "Extracting ${label} archive"
+    extract_archive "${archive_paths[0]}" "$SCRIPT_DIR"
 
-wait "$extract_latest_pid"
-if [[ ! -f "latest.db" ]]; then
-    printf 'Error: expected latest.db after extraction but did not find it.\n' >&2
-    exit 1
-fi
-mv latest.db CBDB_20250520.db
+    if [[ ! -f "$db_name" ]]; then
+        printf 'Error: expected %s after extraction but did not find it.\n' "$db_name" >&2
+        exit 1
+    fi
 
-wait "$pid_part1"
-wait "$pid_part2"
+    rm -f "${archive_paths[@]}"
+}
 
-announce "Extracting CBDB_20240820 archive"
-extract_archive "$part1" "$SCRIPT_DIR"
+download_release "CBDB_20250520.db" \
+    "https://huggingface.co/datasets/cbdb/cbdb-sqlite/resolve/main/history/CBDB_20250520/CBDB_20250520.7z"
 
-rm -f "$latest_archive" "$part1" "$part2"
+download_release "CBDB_20240820.db" \
+    "https://huggingface.co/datasets/cbdb/cbdb-sqlite/resolve/main/history/CBDB_20240820/CBDB_20240820.7z.001" \
+    "https://huggingface.co/datasets/cbdb/cbdb-sqlite/resolve/main/history/CBDB_20240820/CBDB_20240820.7z.002"
 
 announce "Adding primary keys"
 python3 add_primary_keys.py --db CBDB_20250520.db
