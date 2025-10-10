@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import argparse
 import sqlite3
+import sys
 from contextlib import closing
 from pathlib import Path
 from typing import Dict, List, Sequence, Tuple
@@ -79,10 +80,12 @@ def determine_key_columns(
         for candidate in PRIMARY_KEY_CANDIDATES[table]:
             if all(column in existing_columns for column in candidate):
                 return candidate
-        raise RuntimeError(
-            f"Cannot match any primary key candidate for table {table!r}. "
-            f"Available columns: {sorted(existing_columns)}"
+        print(
+            f"Skipping table {table!r}: no matching manual primary key candidate. "
+            f"Available columns: {sorted(existing_columns)}",
+            file=sys.stderr,
         )
+        return []
 
     indexes = conn.execute(
         f"PRAGMA index_list({quote_ident(table)})"
@@ -101,9 +104,12 @@ def determine_key_columns(
         )
         return []
     if len(candidates) > 1:
-        raise RuntimeError(
-            f"Ambiguous primary key candidates for table {table!r}: {[name for name, _ in candidates]}"
+        print(
+            f"Skipping table {table!r}: ambiguous primary key indexes "
+            f"{[name for name, _ in candidates]}",
+            file=sys.stderr,
         )
+        return []
 
     return candidates[0][1]
 
