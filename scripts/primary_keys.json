@@ -1,0 +1,449 @@
+{
+  "ADDR_BELONGS_DATA": [
+    [
+      "c_addr_id",
+      "c_belongs_to",
+      "c_firstyear",
+      "c_lastyear"
+    ]
+  ],
+  "ADDR_CODES": [
+    [
+      "c_addr_id"
+    ]
+  ],
+  "ALTNAME_CODES": [
+    [
+      "c_name_type_code"
+    ]
+  ],
+  "ALTNAME_DATA": [
+    [
+      "c_alt_name_chn",
+      "c_alt_name_type_code",
+      "c_personid"
+    ]
+  ],
+  "APPOINTMENT_CODES": [
+    [
+      "c_appt_code"
+    ]
+  ],
+  "APPOINTMENT_CODE_TYPE_REL": [
+    [
+      "c_appt_code",
+      "c_appt_type_code"
+    ]
+  ],
+  "APPOINTMENT_TYPES": [
+    [
+      "c_appt_type_code"
+    ]
+  ],
+  "ASSOC_CODES": [
+    [
+      "c_assoc_code"
+    ]
+  ],
+  "ASSOC_CODE_TYPE_REL": [
+    [
+      "c_assoc_code",
+      "c_assoc_type_code"
+    ]
+  ],
+  "ASSOC_DATA": [
+    [
+      "c_assoc_code",
+      "c_assoc_id",
+      "c_assoc_kin_code",
+      "c_assoc_kin_id",
+      "c_kin_code",
+      "c_kin_id",
+      "c_personid",
+      "c_text_title",
+      "c_assoc_first_year"
+    ]
+  ],
+  "ASSOC_TYPES": [
+    [
+      "c_assoc_type_code"
+    ]
+  ],
+  "ASSUME_OFFICE_CODES": [
+    [
+      "c_assume_office_code"
+    ]
+  ],
+  "BIOG_ADDR_CODES": [
+    [
+      "c_addr_type"
+    ]
+  ],
+  "BIOG_ADDR_DATA": [
+    [
+      "c_personid",
+      "c_addr_id",
+      "c_addr_type",
+      "c_sequence"
+    ]
+  ],
+  "BIOG_INST_CODES": [
+    [
+      "c_bi_role_code"
+    ]
+  ],
+  "BIOG_INST_DATA": [
+    [
+      "c_bi_role_code",
+      "c_inst_code",
+      "c_inst_name_code",
+      "c_personid"
+    ]
+  ],
+  "BIOG_MAIN": [
+    [
+      "c_personid"
+    ]
+  ],
+  "BIOG_SOURCE_DATA": [
+    [
+      "c_pages",
+      "c_personid",
+      "c_textid"
+    ]
+  ],
+  "BIOG_TEXT_DATA": [
+    [
+      "c_personid",
+      "c_role_id",
+      "c_textid"
+    ]
+  ],
+  "CHORONYM_CODES": [
+    [
+      "c_choronym_code"
+    ]
+  ],
+  "COUNTRY_CODES": [
+    [
+      "c_country_code"
+    ]
+  ],
+  "DYNASTIES": [
+    [
+      "c_dy"
+    ]
+  ],
+  "ENTRY_CODES": [
+    [
+      "c_entry_code"
+    ]
+  ],
+  "ENTRY_CODE_TYPE_REL": [
+    [
+      "c_entry_code",
+      "c_entry_type"
+    ]
+  ],
+  "ENTRY_DATA": [
+    [
+      "c_assoc_code",
+      "c_assoc_id",
+      "c_entry_code",
+      "c_inst_code",
+      "c_inst_name_code",
+      "c_kin_code",
+      "c_kin_id",
+      "c_personid",
+      "c_sequence",
+      "c_year"
+    ]
+  ],
+  "ENTRY_TYPES": [
+    [
+      "c_entry_type"
+    ]
+  ],
+  "ETHNICITY_TRIBE_CODES": [
+    [
+      "c_ethnicity_code"
+    ]
+  ],
+  "EVENTS_ADDR": [
+    [
+      "c_addr_id",
+      "c_event_record_id",
+      "c_personid"
+    ]
+  ],
+  "EVENT_CODES": [
+    [
+      "c_event_code"
+    ]
+  ],
+  "EXTANT_CODES": [
+    [
+      "c_extant_code"
+    ]
+  ],
+  "GANZHI_CODES": [
+    [
+      "c_ganzhi_code"
+    ]
+  ],
+  "HOUSEHOLD_STATUS_CODES": [
+    [
+      "c_household_status_code"
+    ]
+  ],
+  "KINSHIP_CODES": [
+    [
+      "c_kincode"
+    ]
+  ],
+  "KIN_DATA": [
+    [
+      "c_kin_code",
+      "c_kin_id",
+      "c_personid"
+    ]
+  ],
+  "KIN_MOURNING": [
+    [
+      "c_kinrel"
+    ]
+  ],
+  "KIN_MOURNING_STEPS": [
+    [
+      "c_kinrel"
+    ]
+  ],
+  "LITERARYGENRE_CODES": [
+    [
+      "c_lit_genre_code"
+    ]
+  ],
+  "MEASURE_CODES": [
+    [
+      "c_measure_code"
+    ]
+  ],
+  "MIGRATIONS": [
+    [
+      "id"
+    ]
+  ],
+  "NIAN_HAO": [
+    [
+      "c_nianhao_id"
+    ]
+  ],
+  "OAUTH_ACCESS_TOKENS": [
+    [
+      "id"
+    ]
+  ],
+  "OAUTH_AUTH_CODES": [
+    [
+      "id"
+    ]
+  ],
+  "OAUTH_CLIENTS": [
+    [
+      "id"
+    ]
+  ],
+  "OAUTH_PERSONAL_ACCESS_CLIENTS": [
+    [
+      "id"
+    ]
+  ],
+  "OAUTH_REFRESH_TOKENS": [
+    [
+      "id"
+    ]
+  ],
+  "OCCASION_CODES": [
+    [
+      "c_occasion_code"
+    ]
+  ],
+  "OFFICE_CATEGORIES": [
+    [
+      "c_office_category_id"
+    ]
+  ],
+  "OFFICE_CODES": [
+    [
+      "c_office_id"
+    ]
+  ],
+  "OFFICE_CODE_TYPE_REL": [
+    [
+      "c_office_id",
+      "c_office_tree_id"
+    ]
+  ],
+  "OFFICE_TYPE_TREE": [
+    [
+      "c_office_type_node_id"
+    ]
+  ],
+  "OPERATIONS": [
+    [
+      "id"
+    ]
+  ],
+  "PARENTAL_STATUS_CODES": [
+    [
+      "c_parental_status_code"
+    ]
+  ],
+  "PINYIN": [
+    [
+      "id"
+    ]
+  ],
+  "POSSESSION_ACT_CODES": [
+    [
+      "c_possession_act_code"
+    ]
+  ],
+  "POSSESSION_ADDR": [
+    [
+      "c_addr_id",
+      "c_personid",
+      "c_possession_record_id"
+    ]
+  ],
+  "POSSESSION_DATA": [
+    [
+      "c_possession_record_id"
+    ]
+  ],
+  "POSTED_TO_ADDR_DATA": [
+    [
+      "c_addr_id",
+      "c_office_id",
+      "c_posting_id"
+    ]
+  ],
+  "POSTED_TO_OFFICE_DATA": [
+    [
+      "c_office_id",
+      "c_posting_id"
+    ]
+  ],
+  "POSTING_DATA": [
+    [
+      "c_posting_id"
+    ]
+  ],
+  "SCHOLARLYTOPIC_CODES": [
+    [
+      "c_topic_code"
+    ]
+  ],
+  "SOCIAL_INSTITUTION_ADDR": [
+    [
+      "c_inst_addr_id",
+      "c_inst_addr_type_code",
+      "c_inst_code",
+      "c_inst_name_code",
+      "inst_xcoord",
+      "inst_ycoord"
+    ]
+  ],
+  "SOCIAL_INSTITUTION_ADDR_TYPES": [
+    [
+      "c_inst_addr_type_code"
+    ]
+  ],
+  "SOCIAL_INSTITUTION_CODES": [
+    [
+      "c_inst_code",
+      "c_inst_name_code"
+    ]
+  ],
+  "SOCIAL_INSTITUTION_NAME_CODES": [
+    [
+      "c_inst_name_code"
+    ]
+  ],
+  "SOCIAL_INSTITUTION_TYPES": [
+    [
+      "c_inst_type_code"
+    ]
+  ],
+  "STATUS_CODES": [
+    [
+      "c_status_code"
+    ]
+  ],
+  "STATUS_CODE_TYPE_REL": [
+    [
+      "c_status_code",
+      "c_status_type_code"
+    ]
+  ],
+  "STATUS_DATA": [
+    [
+      "c_personid",
+      "c_sequence",
+      "c_status_code"
+    ]
+  ],
+  "STATUS_TYPES": [
+    [
+      "c_status_type_code"
+    ]
+  ],
+  "TEXT_BIBLCAT_CODES": [
+    [
+      "c_text_cat_code"
+    ]
+  ],
+  "TEXT_BIBLCAT_CODE_TYPE_REL": [
+    [
+      "c_text_cat_code",
+      "c_text_cat_type_id"
+    ]
+  ],
+  "TEXT_BIBLCAT_TYPES": [
+    [
+      "c_text_cat_type_id"
+    ]
+  ],
+  "TEXT_CODES": [
+    [
+      "c_textid"
+    ]
+  ],
+  "TEXT_INSTANCE_DATA": [
+    [
+      "c_textid",
+      "c_text_edition_id",
+      "c_text_instance_id"
+    ]
+  ],
+  "TEXT_ROLE_CODES": [
+    [
+      "c_role_id"
+    ]
+  ],
+  "TEXT_TYPE": [
+    [
+      "c_text_type_code"
+    ]
+  ],
+  "USERS": [
+    [
+      "id"
+    ]
+  ],
+  "YEAR_RANGE_CODES": [
+    [
+      "c_range_code"
+    ]
+  ]
+}

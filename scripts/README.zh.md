@@ -16,6 +16,7 @@
 - `7z`
 - `sqlite3`
 - `python3`
+- `mysql-connector-python` (create_primary_key_json[maintained by CBDB].py)
 
 `process_cbdb_dbs.sh` 会在启动时检查依赖，缺失工具时会直接报错退出。
 

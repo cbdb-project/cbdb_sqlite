@@ -1,8 +1,8 @@
 # cbdb_sqlite
 
-[**latest.7z**](https://github.com/cbdb-project/cbdb_sqlite/blob/master/latest.7z) - The latest SQLite version of the [China Biographical Database](https://projects.iq.harvard.edu/cbdb/home)
+[**latest.7z**](https://github.com/cbdb-project/cbdb_sqlite/blob/master/latest.7z) - The latest SQLite version of the [China Biographical Database](https://projects.iq.harvard.edu/cbdb/home). This version includes no indexes or primary keys.
 
-You can also download it from huggingface:
+You can also download it from huggingface (includes indexes and primary keys):
 
 https://huggingface.co/datasets/cbdb/cbdb-sqlite/blob/main/latest.7z
 

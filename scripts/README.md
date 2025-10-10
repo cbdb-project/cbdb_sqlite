@@ -18,6 +18,7 @@ The scripts expect the following command line tools:
 - `7z`
 - `sqlite3`
 - `python3`
+- `mysql-connector-python` (create_primary_key_json[maintained by CBDB].py)
 
 Install the tools before running the scripts. `process_cbdb_dbs.sh` will perform a sanity check and exit early if any are missing.
 

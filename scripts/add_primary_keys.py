@@ -25,6 +25,7 @@ import sqlite3
 from contextlib import closing
 from pathlib import Path
 from typing import Dict, List, Sequence, Tuple
+import json
 
 PRIMARY_KEY_INDEX_PATTERNS = ("PrimaryKey", "Primary Key")
 
@@ -32,177 +33,14 @@ PRIMARY_KEY_INDEX_PATTERNS = ("PrimaryKey", "Primary Key")
 # index or have schema variations between database versions. Each table can
 # supply multiple candidates; the first candidate whose columns exist in the
 # current schema will be used.
-PRIMARY_KEY_CANDIDATES: Dict[str, Tuple[Tuple[str, ...], ...]] = {
-    "ADDR_BELONGS_DATA": (
-        ("c_addr_id", "c_belongs_to", "c_firstyear", "c_lastyear"),
-    ),
-    "ADDR_CODES": (("c_addr_id",),),
-    "ADDR_PLACE_DATA": (("c_addr_id", "c_place_id"),),
-    "ADDR_XY": (("c_addr_id",),),
-    # Expected to fail uniqueness checks and get skipped.
-    "ADDRESSES": (("c_addr_id",),),
-    "ALTNAME_CODES": (("c_name_type_code",),),
-    "ALTNAME_DATA": (("c_personid", "c_alt_name_chn", "c_alt_name_type_code"),),
-    "APPOINTMENT_CODES": (("c_appt_code",),),
-    "APPOINTMENT_CODE_TYPE_REL": (("c_appt_code", "c_appt_type_code"),),
-    "APPOINTMENT_TYPES": (("c_appt_type_code",),),
-    "APPOINTMENT_TYPE_CODES": (("c_appt_type_code",),),
-    "ASSOC_CODES": (("c_assoc_code",),),
-    "ASSOC_CODE_TYPE_REL": (
-        ("c_assoc_code", "c_assoc_type_code"),
-        ("c_assoc_code", "c_assoc_type_id"),
-    ),
-    "ASSOC_DATA": (
-        (
-            "c_assoc_code",
-            "c_personid",
-            "c_kin_code",
-            "c_kin_id",
-            "c_assoc_id",
-            "c_assoc_kin_code",
-            "c_assoc_kin_id",
-            "c_assoc_first_year",
-            "c_text_title",
-        ),
-        (
-            "c_assoc_code",
-            "c_personid",
-            "c_kin_code",
-            "c_kin_id",
-            "c_assoc_id",
-            "c_assoc_kin_code",
-            "c_assoc_kin_id",
-            "c_assoc_year",
-            "c_text_title",
-        ),
-    ),
-    "ASSOC_TYPES": (("c_assoc_type_code",), ("c_assoc_type_id",)),
-    "ASSUME_OFFICE_CODES": (("c_assume_office_code",),),
-    "BIOG_ADDR_CODES": (("c_addr_type",),),
-    "BIOG_ADDR_DATA": (
-        ("c_personid", "c_addr_id", "c_addr_type", "c_sequence"),
-    ),
-    "BIOG_INST_CODES": (("c_bi_role_code",),),
-    "BIOG_INST_DATA": (
-        ("c_personid", "c_inst_name_code", "c_inst_code", "c_bi_role_code"),
-    ),
-    "BIOG_MAIN": (("c_personid",),),
-    "BIOG_SOURCE_DATA": (("c_personid", "c_textid", "c_pages"),),
-    "BIOG_TEXT_DATA": (("c_textid", "c_personid", "c_role_id"),),
-    "CBDB_NAME_LIST": (("c_personid", "name", "source"),),
-    "CHORONYM_CODES": (("c_choronym_code",),),
-    "COUNTRY_CODES": (("c_country_code",),),
-    "Copy Of CopyTables": (("TableName",),),
-    "CopyMissingTables": (("ID",),),
-    "CopyTables": (("TableName",),),
-    "CopyTablesDefault": (("ID",),),
-    "DATABASE_LINK_CODES": (("c_db_id",),),
-    "DATABASE_LINK_DATA": (("c_person_id", "c_db_id", "c_db_sys_id"),),
-    "DYNASTIES": (("c_dy",),),
-    "ENTRY_CODES": (("c_entry_code",),),
-    "ENTRY_CODE_TYPE_REL": (("c_entry_code", "c_entry_type"),),
-    "ENTRY_DATA": (
-        (
-            "c_personid",
-            "c_entry_code",
-            "c_sequence",
-            "c_kin_code",
-            "c_kin_id",
-            "c_assoc_code",
-            "c_assoc_id",
-            "c_year",
-            "c_inst_code",
-            "c_inst_name_code",
-        ),
-    ),
-    "ENTRY_TYPES": (("c_entry_type",),),
-    "ETHNICITY_TRIBE_CODES": (("c_ethnicity_code",),),
-    "EVENTS_ADDR": (("c_event_record_id", "c_personid", "c_addr_id"),),
-    "EVENTS_DATA": (
-        (
-            "c_personid",
-            "c_sequence",
-            "c_event_record_id",
-            "c_event_code",
-            "c_event",
-        ),
-    ),
-    "EVENT_CODES": (("c_event_code",),),
-    "EXTANT_CODES": (("c_extant_code",),),
-    "ForeignKeys": (("AccessTblNm", "AccessFldNm"),),
-    "FormLabels": (("c_form", "c_label_id"),),
-    "GANZHI_CODES": (("c_ganzhi_code",),),
-    "HOUSEHOLD_STATUS_CODES": (("c_household_status_code",),),
-    "INDEXYEAR_TYPE_CODES": (("c_index_year_type_code",),),
-    "KINSHIP_CODES": (("c_kincode",),),
-    "KIN_DATA": (("c_personid", "c_kin_id", "c_kin_code"),),
-    "KIN_MOURNING_STEPS": (("c_kinrel",),),
-    "KIN_Mourning": (("c_kinrel",),),
-    "LITERARYGENRE_CODES": (("c_lit_genre_code",),),
-    "MEASURE_CODES": (("c_measure_code",),),
-    "NIAN_HAO": (("c_nianhao_id",),),
-    "OCCASION_CODES": (("c_occasion_code",),),
-    "OFFICE_CATEGORIES": (("c_office_category_id",),),
-    "OFFICE_CODES": (("c_office_id",),),
-    "OFFICE_CODES_CONVERSION": (("c_office_id",),),
-    "OFFICE_CODE_TYPE_REL": (("c_office_id", "c_office_tree_id"),),
-    "OFFICE_TYPE_TREE": (("c_office_type_node_id",),),
-    "OFFICE_TYPE_TREE_backup": (("c_office_type_node_id",),),
-    "PARENTAL_STATUS_CODES": (("c_parental_status_code",),),
-    "PLACE_CODES": (("c_place_id",),),
-    "POSSESSION_ACT_CODES": (("c_possession_act_code",),),
-    "POSSESSION_ADDR": (("c_possession_record_id", "c_personid", "c_addr_id"),),
-    "POSSESSION_DATA": (("c_possession_record_id",),),
-    "POSTED_TO_ADDR_DATA": (("c_posting_id", "c_office_id", "c_addr_id"),),
-    "POSTED_TO_OFFICE_DATA": (("c_office_id", "c_posting_id"),),
-    "POSTING_DATA": (("c_posting_id",),),
-    "SCHOLARLYTOPIC_CODES": (("c_topic_code",),),
-    "SOCIAL_INSTITUTION_ADDR": (
-        (
-            "c_inst_name_code",
-            "c_inst_code",
-            "c_inst_addr_type_code",
-            "c_inst_addr_id",
-            "inst_xcoord",
-            "inst_ycoord",
-        ),
-    ),
-    "SOCIAL_INSTITUTION_ADDR_TYPES": (("c_inst_addr_type_code",),),
-    "SOCIAL_INSTITUTION_ALTNAME_CODES": (("c_inst_altname_type",),),
-    "SOCIAL_INSTITUTION_ALTNAME_DATA": (
-        (
-            "c_inst_name_code",
-            "c_inst_code",
-            "c_inst_altname_type",
-            "c_inst_altname_hz",
-        ),
-    ),
-    "SOCIAL_INSTITUTION_CODES": (("c_inst_name_code", "c_inst_code"),),
-    "SOCIAL_INSTITUTION_CODES_CONVERSION": (
-        ("c_inst_name_code", "c_inst_code"),
-    ),
-    "SOCIAL_INSTITUTION_NAME_CODES": (("c_inst_name_code",),),
-    "SOCIAL_INSTITUTION_TYPES": (("c_inst_type_code",),),
-    "STATUS_CODES": (("c_status_code",),),
-    "STATUS_CODE_TYPE_REL": (("c_status_code", "c_status_type_code"),),
-    "STATUS_DATA": (("c_personid", "c_sequence", "c_status_code"),),
-    "STATUS_TYPES": (("c_status_type_code",),),
-    "TEXT_BIBLCAT_CODES": (("c_text_cat_code",),),
-    "TEXT_BIBLCAT_CODE_TYPE_REL": (("c_text_cat_code", "c_text_cat_type_id"),),
-    "TEXT_BIBLCAT_TYPES": (("c_text_cat_type_id",),),
-    "TEXT_CODES": (("c_textid",),),
-    "TEXT_INSTANCE_DATA": (
-        ("c_textid", "c_text_edition_id", "c_text_instance_id"),
-    ),
-    "TEXT_ROLE_CODES": (("c_role_id",),),
-    "TEXT_TYPE": (("c_text_type_code",),),
-    "TMP_INDEX_YEAR": (("c_personid",),),
-    "TablesFields": (("AccessTblNm", "AccessFldNm"),),
-    "TablesFieldsChanges": (
-        ("TableName", "FieldName", "ChangeDate", "Change"),
-    ),
-    "YEAR_RANGE_CODES": (("c_range_code",),),
-}
+
+def load_primary_key_candidates_from_json(json_path: str) -> Dict[str, Tuple[Tuple[str, ...], ...]]:
+    with open(json_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    # Convert lists to tuple-of-tuples for compatibility
+    return {k: tuple(tuple(cols) for cols in v) for k, v in data.items()}
+
+PRIMARY_KEY_CANDIDATES: Dict[str, Tuple[Tuple[str, ...], ...]] = load_primary_key_candidates_from_json("primary_keys.json")
 
 # ADDRESSES table did not change between 20240820 and 20250520 releases.
 SKIP_TABLES = {"ADDRESSES"}
@@ -258,9 +96,10 @@ def determine_key_columns(
             candidates.append((idx_name, columns_from_index(conn, idx_name)))
 
     if not candidates:
-        raise RuntimeError(
+        print(
             f"Cannot determine key columns for table {table!r}: no matching index and no manual mapping."
         )
+        return []
     if len(candidates) > 1:
         raise RuntimeError(
             f"Ambiguous primary key candidates for table {table!r}: {[name for name, _ in candidates]}"
@@ -393,6 +232,8 @@ def main(database: Path) -> None:
             if table_has_primary_key(conn, table):
                 continue
             key_columns = determine_key_columns(conn, table)
+            if not key_columns:
+                continue
             dup_count = duplicate_group_count(conn, table, key_columns)
             if dup_count:
                 duplicates[table] = (key_columns, dup_count)
