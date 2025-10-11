@@ -35,13 +35,14 @@ PRIMARY_KEY_INDEX_PATTERNS = ("PrimaryKey", "Primary Key")
 # supply multiple candidates; the first candidate whose columns exist in the
 # current schema will be used.
 
-def load_primary_key_candidates_from_json(json_path: str) -> Dict[str, Tuple[Tuple[str, ...], ...]]:
+def load_primary_key_candidates_from_json(json_path: Path) -> Dict[str, Tuple[Tuple[str, ...], ...]]:
     with open(json_path, "r", encoding="utf-8") as f:
         data = json.load(f)
     # Convert lists to tuple-of-tuples for compatibility
     return {k: tuple(tuple(cols) for cols in v) for k, v in data.items()}
 
-PRIMARY_KEY_CANDIDATES: Dict[str, Tuple[Tuple[str, ...], ...]] = load_primary_key_candidates_from_json("primary_keys.json")
+PRIMARY_KEY_CONFIG_PATH = Path(__file__).resolve().parent / "primary_keys.json"
+PRIMARY_KEY_CANDIDATES: Dict[str, Tuple[Tuple[str, ...], ...]] = load_primary_key_candidates_from_json(PRIMARY_KEY_CONFIG_PATH)
 
 # ADDRESSES table did not change between 20240820 and 20250520 releases.
 SKIP_TABLES = {"ADDRESSES"}
