@@ -4,7 +4,21 @@ import mysql.connector
 import json
 import os
 import sys
-from typing import Dict, Tuple
+from typing import Dict, List, Tuple
+
+# Tables that should be excluded from the generated mapping because they do not
+# appear in the distributed SQLite release (for example Laravel's OAUTH_* tables).
+TABLE_BLACKLIST = {
+    "MIGRATIONS",
+    "OAUTH_ACCESS_TOKENS",
+    "OAUTH_AUTH_CODES",
+    "OAUTH_CLIENTS",
+    "OAUTH_PERSONAL_ACCESS_CLIENTS",
+    "OAUTH_REFRESH_TOKENS",
+    "OPERATIONS",
+    "PINYIN",
+    "USERS",
+}
 
 def main():
     try:
@@ -44,9 +58,11 @@ def main():
         rows = cursor.fetchall()
 
         # Build mapping: table -> tuple of primary key columns (ordered)
-        pk_map: Dict[str, Tuple[str, ...]] = {}
+        pk_map: Dict[str, List[str]] = {}
         for table, column, _ in rows:
             table_upper = table.upper()
+            if table_upper in TABLE_BLACKLIST:
+                continue
             if table_upper not in pk_map:
                 pk_map[table_upper] = []
             pk_map[table_upper].append(column)

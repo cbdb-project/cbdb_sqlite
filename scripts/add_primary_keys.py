@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import argparse
 import sqlite3
+import sys
 from contextlib import closing
 from pathlib import Path
 from typing import Dict, List, Sequence, Tuple
@@ -34,13 +35,14 @@ PRIMARY_KEY_INDEX_PATTERNS = ("PrimaryKey", "Primary Key")
 # supply multiple candidates; the first candidate whose columns exist in the
 # current schema will be used.
 
-def load_primary_key_candidates_from_json(json_path: str) -> Dict[str, Tuple[Tuple[str, ...], ...]]:
+def load_primary_key_candidates_from_json(json_path: Path) -> Dict[str, Tuple[Tuple[str, ...], ...]]:
     with open(json_path, "r", encoding="utf-8") as f:
         data = json.load(f)
     # Convert lists to tuple-of-tuples for compatibility
     return {k: tuple(tuple(cols) for cols in v) for k, v in data.items()}
 
-PRIMARY_KEY_CANDIDATES: Dict[str, Tuple[Tuple[str, ...], ...]] = load_primary_key_candidates_from_json("primary_keys.json")
+PRIMARY_KEY_CONFIG_PATH = Path(__file__).resolve().parent / "primary_keys.json"
+PRIMARY_KEY_CANDIDATES: Dict[str, Tuple[Tuple[str, ...], ...]] = load_primary_key_candidates_from_json(PRIMARY_KEY_CONFIG_PATH)
 
 # ADDRESSES table did not change between 20240820 and 20250520 releases.
 SKIP_TABLES = {"ADDRESSES"}
@@ -79,10 +81,12 @@ def determine_key_columns(
         for candidate in PRIMARY_KEY_CANDIDATES[table]:
             if all(column in existing_columns for column in candidate):
                 return candidate
-        raise RuntimeError(
-            f"Cannot match any primary key candidate for table {table!r}. "
-            f"Available columns: {sorted(existing_columns)}"
+        print(
+            f"Skipping table {table!r}: no matching manual primary key candidate. "
+            f"Available columns: {sorted(existing_columns)}",
+            file=sys.stderr,
         )
+        return []
 
     indexes = conn.execute(
         f"PRAGMA index_list({quote_ident(table)})"
@@ -101,9 +105,12 @@ def determine_key_columns(
         )
         return []
     if len(candidates) > 1:
-        raise RuntimeError(
-            f"Ambiguous primary key candidates for table {table!r}: {[name for name, _ in candidates]}"
+        print(
+            f"Skipping table {table!r}: ambiguous primary key indexes "
+            f"{[name for name, _ in candidates]}",
+            file=sys.stderr,
         )
+        return []
 
     return candidates[0][1]
 
