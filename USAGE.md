@@ -14,12 +14,13 @@ This document summarizes the common workflow for obtaining, processing, and quer
   sudo apt update
   sudo apt install -y sqlite3 python3 wget p7zip-full
   ```
-  Install `unrar` if you need to handle archives other than 7z.
 - **macOS (via Homebrew)**:
   ```bash
   brew update
   brew install sqlite python@3 wget p7zip
   ```
+
+Install `unrar` if you need to handle older version archives compresswed with `rar` tool.
 
 Use tools such as `pyenv` if you need to maintain multiple Python versions and create project-specific environments.
 

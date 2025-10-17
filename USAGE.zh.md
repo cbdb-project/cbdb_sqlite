@@ -12,12 +12,13 @@
   sudo apt update
   sudo apt install -y sqlite3 python3 wget p7zip-full
   ```
-  如果需要处理 7z 以外的压缩格式，可额外安装 `unrar` 工具。
 - **macOS（通过 Homebrew）**：
   ```bash
   brew update
   brew install sqlite python@3 wget p7zip
   ```
+
+如果需要处理 7z 以外的压缩格式，可额外安装 `unrar` 工具。
 
 如需在系统中保留多个 Python 版本，可使用 `pyenv` 等工具创建项目隔离环境。
 
