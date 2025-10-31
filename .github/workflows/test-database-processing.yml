@@ -1,0 +1,60 @@
+name: Test Database Processing
+
+on:
+  push:
+    branches:
+      - master
+      - update-views
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  test-database-processing:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies (7z and sqlite3)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y p7zip-full sqlite3
+
+      - name: Verify 7z installation
+        run: 7z --help
+
+      - name: Extract latest.7z
+        run: |
+          echo "Extracting latest.7z..."
+          7z x latest.7z
+          echo "Extraction complete."
+          ls -lh latest.db
+
+      - name: Run add_primary_keys.py
+        run: |
+          echo "Running add_primary_keys.py..."
+          python scripts/add_primary_keys.py --db latest.db
+          echo "Primary keys added successfully."
+
+      - name: Run create_views.sh
+        run: |
+          echo "Running create_views.sh..."
+          chmod +x scripts/create_views.sh
+          scripts/create_views.sh latest.db
+          echo "Views created successfully."
+
+      - name: Verify database integrity
+        run: |
+          echo "Checking database integrity..."
+          sqlite3 latest.db "PRAGMA integrity_check;"
+          echo "Verifying views exist..."
+          sqlite3 latest.db "SELECT name FROM sqlite_master WHERE type='view' ORDER BY name;"
+          echo "All checks passed!"
