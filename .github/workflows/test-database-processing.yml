@@ -2,12 +2,7 @@ name: Test Database Processing
 
 on:
   push:
-    branches:
-      - master
-      - update-views
   pull_request:
-    branches:
-      - master
   workflow_dispatch:
 
 jobs:
