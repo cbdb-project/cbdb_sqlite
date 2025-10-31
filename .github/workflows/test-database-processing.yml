@@ -48,7 +48,7 @@ jobs:
           /usr/local/bin/sqlite3 --version
           echo ""
           echo "=== Python sqlite3 module version ==="
-          python -c "import sqlite3; print('SQLite version:', sqlite3.sqlite_version); print('Module version:', sqlite3.version)"
+          python -c "import sqlite3; print('Python sqlite3 module uses SQLite version:', sqlite3.sqlite_version)"
 
       - name: Extract latest.7z
         run: |
