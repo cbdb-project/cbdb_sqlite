@@ -50,12 +50,12 @@ LEFT JOIN TEXT_CODES AS texts
 SQL
 echo "Finished view View_AltnameData."
 
-# View_Association: fan-out join on ASSOC_DATA to kinship, institution, genre,
+# View_AssociationData: fan-out join on ASSOC_DATA to kinship, institution, genre,
 # occasion, topic, address, and textual sources.
-echo "Creating view View_Association..."
+echo "Creating view View_AssociationData..."
 sqlite3 "$DB_PATH" <<'SQL'
-DROP VIEW IF EXISTS View_Association;
-CREATE VIEW View_Association AS
+DROP VIEW IF EXISTS View_AssociationData;
+CREATE VIEW View_AssociationData AS
 SELECT
     a.c_personid,
     a.c_assoc_id AS c_node_id,
@@ -139,7 +139,7 @@ LEFT JOIN TEXT_CODES AS text_codes
 LEFT JOIN SOCIAL_INSTITUTION_NAME_CODES AS inst_names
     ON inst_names.c_inst_name_code = a.c_inst_name_code;
 SQL
-echo "Finished view View_Association."
+echo "Finished view View_AssociationData."
 
 # View_BiogAddrData: enriches BIOG_ADDR_DATA with address labels, reign data,
 # ganzhi, and text citations.
@@ -354,12 +354,12 @@ FROM
 SQL
 echo "Finished view View_BiogTextData."
 
-# View_Entry: covers exam/entry records with dynasties, kin, institutions, and
+# View_EntryData: covers exam/entry records with dynasties, kin, institutions, and
 # location context.
-echo "Creating view View_Entry..."
+echo "Creating view View_EntryData..."
 sqlite3 "$DB_PATH" <<'SQL'
-DROP VIEW IF EXISTS View_Entry;
-CREATE VIEW View_Entry AS
+DROP VIEW IF EXISTS View_EntryData;
+CREATE VIEW View_EntryData AS
 SELECT
     entry.c_personid,
     person.c_name,
@@ -459,14 +459,14 @@ LEFT JOIN INDEXYEAR_TYPE_CODES AS indexyear_codes
 LEFT JOIN DYNASTIES AS dynasties
     ON dynasties.c_dy = person.c_dy;
 SQL
-echo "Finished view View_Entry."
+echo "Finished view View_EntryData."
 
-# View_EventAddr & View_EventData: combine event participation with address,
+# View_EventAddrData & View_EventData: combine event participation with address,
 # reign, and text info.
-echo "Creating view View_EventAddr..."
+echo "Creating view View_EventAddrData..."
 sqlite3 "$DB_PATH" <<'SQL'
-DROP VIEW IF EXISTS View_EventAddr;
-CREATE VIEW View_EventAddr AS
+DROP VIEW IF EXISTS View_EventAddrData;
+CREATE VIEW View_EventAddrData AS
 SELECT
     ea.c_personid,
     person.c_name AS c_person_name,
@@ -511,7 +511,7 @@ LEFT JOIN YEAR_RANGE_CODES AS range_codes
 LEFT JOIN NIAN_HAO AS nh
     ON nh.c_nianhao_id = ea.c_nh_code;
 SQL
-echo "Finished view View_EventAddr."
+echo "Finished view View_EventAddrData."
 
 # See comment above.
 echo "Creating view View_EventData..."
@@ -565,11 +565,11 @@ LEFT JOIN TEXT_CODES AS texts
 SQL
 echo "Finished view View_EventData."
 
-# View_KinAddr: exposes kin relations with address and citation data.
-echo "Creating view View_KinAddr..."
+# View_KinAddrData: exposes kin relations with address and citation data.
+echo "Creating view View_KinAddrData..."
 sqlite3 "$DB_PATH" <<'SQL'
-DROP VIEW IF EXISTS View_KinAddr;
-CREATE VIEW View_KinAddr AS
+DROP VIEW IF EXISTS View_KinAddrData;
+CREATE VIEW View_KinAddrData AS
 SELECT
     kd.c_personid,
     person.c_name,
@@ -598,14 +598,14 @@ LEFT JOIN KINSHIP_CODES AS kin_codes
 LEFT JOIN TEXT_CODES AS texts
     ON texts.c_textid = kd.c_source;
 SQL
-echo "Finished view View_KinAddr."
+echo "Finished view View_KinAddrData."
 
-# View_People: produces a denormalized “person dossier” with birth/death reign
+# View_PeopleData: produces a denormalized “person dossier” with birth/death reign
 # data, ethnicity, household, choronym, and textual references.
-echo "Creating view View_People..."
+echo "Creating view View_PeopleData..."
 sqlite3 "$DB_PATH" <<'SQL'
-DROP VIEW IF EXISTS View_People;
-CREATE VIEW View_People AS
+DROP VIEW IF EXISTS View_PeopleData;
+CREATE VIEW View_PeopleData AS
 SELECT
     bm.c_personid,
     bm.c_name,
@@ -735,13 +735,13 @@ LEFT JOIN GANZHI_CODES AS by_gz
 LEFT JOIN GANZHI_CODES AS dy_gz
     ON dy_gz.c_ganzhi_code = bm.c_dy_day_gz;
 SQL
-echo "Finished view View_People."
+echo "Finished view View_PeopleData."
 
-# View_PeopleAddr: pares this down to index addresses.
-echo "Creating view View_PeopleAddr..."
+# View_PeopleAddrData: pares this down to index addresses.
+echo "Creating view View_PeopleAddrData..."
 sqlite3 "$DB_PATH" <<'SQL'
-DROP VIEW IF EXISTS View_PeopleAddr;
-CREATE VIEW View_PeopleAddr AS
+DROP VIEW IF EXISTS View_PeopleAddrData;
+CREATE VIEW View_PeopleAddrData AS
 SELECT
     BIOG_MAIN.c_personid,
     BIOG_MAIN.c_name,
@@ -763,14 +763,14 @@ FROM
     )
     LEFT JOIN BIOG_ADDR_CODES ON BIOG_MAIN.c_index_addr_type_code = BIOG_ADDR_CODES.c_addr_type;
 SQL
-echo "Finished view View_PeopleAddr."
+echo "Finished view View_PeopleAddrData."
 
-# View_Possessions: joins possession records to act/measure codes, reign data,
-# and texts; View_PossessionsAddr adds the resolved address.
-echo "Creating view View_Possessions..."
+# View_PossessionsData: joins possession records to act/measure codes, reign data,
+# and texts; View_PossessionsAddrData adds the resolved address.
+echo "Creating view View_PossessionsData..."
 sqlite3 "$DB_PATH" <<'SQL'
-DROP VIEW IF EXISTS View_Possessions;
-CREATE VIEW View_Possessions AS
+DROP VIEW IF EXISTS View_PossessionsData;
+CREATE VIEW View_PossessionsData AS
 SELECT
     pd.c_personid,
     pd.c_possession_record_id,
@@ -812,29 +812,29 @@ LEFT JOIN TEXT_CODES AS texts
 LEFT JOIN POSSESSION_ADDR AS addr
     ON addr.c_possession_record_id = pd.c_possession_record_id;
 SQL
-echo "Finished view View_Possessions."
+echo "Finished view View_PossessionsData."
 
 # See above.
-echo "Creating view View_PossessionsAddr..."
+echo "Creating view View_PossessionsAddrData..."
 sqlite3 "$DB_PATH" <<'SQL'
-DROP VIEW IF EXISTS View_PossessionsAddr;
-CREATE VIEW View_PossessionsAddr AS
+DROP VIEW IF EXISTS View_PossessionsAddrData;
+CREATE VIEW View_PossessionsAddrData AS
 SELECT
-    View_Possessions.*,
+    View_PossessionsData.*,
     ADDR_CODES.c_name AS c_addr_name,
     ADDR_CODES.c_name_chn AS c_addr_chn
 FROM
-    View_Possessions
-    LEFT JOIN ADDR_CODES ON View_Possessions.c_addr_id = ADDR_CODES.c_addr_id;
+    View_PossessionsData
+    LEFT JOIN ADDR_CODES ON View_PossessionsData.c_addr_id = ADDR_CODES.c_addr_id;
 SQL
-echo "Finished view View_PossessionsAddr."
+echo "Finished view View_PossessionsAddrData."
 
-# View_PostingAddr & View_PostingOffice: wrap office postings with addresses,
+# View_PostingAddrData & View_PostingOfficeData: wrap office postings with addresses,
 # office metadata, dynasties, and reign data.
-echo "Creating view View_PostingAddr..."
+echo "Creating view View_PostingAddrData..."
 sqlite3 "$DB_PATH" <<'SQL'
-DROP VIEW IF EXISTS View_PostingAddr;
-CREATE VIEW View_PostingAddr AS
+DROP VIEW IF EXISTS View_PostingAddrData;
+CREATE VIEW View_PostingAddrData AS
 SELECT
     POSTED_TO_ADDR_DATA.c_personid,
     POSTED_TO_ADDR_DATA.c_posting_id,
@@ -846,13 +846,13 @@ FROM
     ADDR_CODES
     INNER JOIN POSTED_TO_ADDR_DATA ON ADDR_CODES.c_addr_id = POSTED_TO_ADDR_DATA.c_addr_id;
 SQL
-echo "Finished view View_PostingAddr."
+echo "Finished view View_PostingAddrData."
 
 # See above.
-echo "Creating view View_PostingOffice..."
+echo "Creating view View_PostingOfficeData..."
 sqlite3 "$DB_PATH" <<'SQL'
-DROP VIEW IF EXISTS View_PostingOffice;
-CREATE VIEW View_PostingOffice AS
+DROP VIEW IF EXISTS View_PostingOfficeData;
+CREATE VIEW View_PostingOfficeData AS
 SELECT
     po.c_personid,
     po.c_office_id,
@@ -940,7 +940,7 @@ LEFT JOIN OFFICE_CATEGORIES AS categories
 LEFT JOIN DYNASTIES AS dynasties
     ON dynasties.c_dy = po.c_dy;
 SQL
-echo "Finished view View_PostingOffice."
+echo "Finished view View_PostingOfficeData."
 
 # View_StatusData: assembles status changes with reign spans and document
 # metadata.
@@ -999,22 +999,22 @@ echo "Running sanity counts on views..."
 # List of views to check
 VIEWS=(
     "View_AltnameData"
-    "View_Association"
+    "View_AssociationData"
     "View_BiogAddrData"
     "View_BiogInstAddrData"
     "View_BiogInstData"
     "View_BiogSourceData"
     "View_BiogTextData"
-    "View_Entry"
-    "View_EventAddr"
+    "View_EntryData"
+    "View_EventAddrData"
     "View_EventData"
-    "View_KinAddr"
-    "View_People"
-    "View_PeopleAddr"
-    "View_Possessions"
-    "View_PossessionsAddr"
-    "View_PostingAddr"
-    "View_PostingOffice"
+    "View_KinAddrData"
+    "View_PeopleData"
+    "View_PeopleAddrData"
+    "View_PossessionsData"
+    "View_PossessionsAddrData"
+    "View_PostingAddrData"
+    "View_PostingOfficeData"
     "View_StatusData"
 )
 
