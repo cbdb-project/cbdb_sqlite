@@ -1021,7 +1021,7 @@ VIEWS=(
 # Check each view individually to identify which one causes issues
 for view in "${VIEWS[@]}"; do
     echo "Checking view: $view..."
-    if sqlite3 "$DB_PATH" "SELECT '$view' AS view_name, COUNT(*) AS row_count FROM $view;" 2>&1; then
+    if sqlite3 "$DB_PATH" "PRAGMA mmap_size=0; SELECT '$view' AS view_name, COUNT(*) AS row_count FROM $view;" 2>&1; then
         echo "  ✓ $view completed successfully"
     else
         EXIT_CODE=$?
