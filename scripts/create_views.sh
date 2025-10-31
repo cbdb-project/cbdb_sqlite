@@ -995,23 +995,41 @@ echo "Finished view View_StatusData."
 echo "Created CBDB views in '$DB_PATH'."
 
 echo "Running sanity counts on views..."
-sqlite3 "$DB_PATH" <<'SQL'
-SELECT 'View_AltnameData' AS view_name, COUNT(*) AS row_count FROM View_AltnameData;
-SELECT 'View_Association' AS view_name, COUNT(*) AS row_count FROM View_Association;
-SELECT 'View_BiogAddrData' AS view_name, COUNT(*) AS row_count FROM View_BiogAddrData;
-SELECT 'View_BiogInstAddrData' AS view_name, COUNT(*) AS row_count FROM View_BiogInstAddrData;
-SELECT 'View_BiogInstData' AS view_name, COUNT(*) AS row_count FROM View_BiogInstData;
-SELECT 'View_BiogSourceData' AS view_name, COUNT(*) AS row_count FROM View_BiogSourceData;
-SELECT 'View_BiogTextData' AS view_name, COUNT(*) AS row_count FROM View_BiogTextData;
-SELECT 'View_Entry' AS view_name, COUNT(*) AS row_count FROM View_Entry;
-SELECT 'View_EventAddr' AS view_name, COUNT(*) AS row_count FROM View_EventAddr;
-SELECT 'View_EventData' AS view_name, COUNT(*) AS row_count FROM View_EventData;
-SELECT 'View_KinAddr' AS view_name, COUNT(*) AS row_count FROM View_KinAddr;
-SELECT 'View_People' AS view_name, COUNT(*) AS row_count FROM View_People;
-SELECT 'View_PeopleAddr' AS view_name, COUNT(*) AS row_count FROM View_PeopleAddr;
-SELECT 'View_Possessions' AS view_name, COUNT(*) AS row_count FROM View_Possessions;
-SELECT 'View_PossessionsAddr' AS view_name, COUNT(*) AS row_count FROM View_PossessionsAddr;
-SELECT 'View_PostingAddr' AS view_name, COUNT(*) AS row_count FROM View_PostingAddr;
-SELECT 'View_PostingOffice' AS view_name, COUNT(*) AS row_count FROM View_PostingOffice;
-SELECT 'View_StatusData' AS view_name, COUNT(*) AS row_count FROM View_StatusData;
-SQL
+
+# List of views to check
+VIEWS=(
+    "View_AltnameData"
+    "View_Association"
+    "View_BiogAddrData"
+    "View_BiogInstAddrData"
+    "View_BiogInstData"
+    "View_BiogSourceData"
+    "View_BiogTextData"
+    "View_Entry"
+    "View_EventAddr"
+    "View_EventData"
+    "View_KinAddr"
+    "View_People"
+    "View_PeopleAddr"
+    "View_Possessions"
+    "View_PossessionsAddr"
+    "View_PostingAddr"
+    "View_PostingOffice"
+    "View_StatusData"
+)
+
+# Check each view individually to identify which one causes issues
+for view in "${VIEWS[@]}"; do
+    echo "Checking view: $view..."
+    if sqlite3 "$DB_PATH" "SELECT '$view' AS view_name, COUNT(*) AS row_count FROM $view;" 2>&1; then
+        echo "  ✓ $view completed successfully"
+    else
+        EXIT_CODE=$?
+        echo "  ✗ ERROR: $view failed with exit code $EXIT_CODE"
+        echo "  Memory info:"
+        free -h 2>/dev/null || true
+        exit $EXIT_CODE
+    fi
+done
+
+echo "All sanity checks passed!"
