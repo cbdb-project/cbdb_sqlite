@@ -32,8 +32,9 @@ jobs:
           SQLITE_VERSION=3500400
           SQLITE_YEAR=2025
           wget https://www.sqlite.org/${SQLITE_YEAR}/sqlite-tools-linux-x64-${SQLITE_VERSION}.zip
-          unzip -q sqlite-tools-linux-x64-${SQLITE_VERSION}.zip
-          sudo cp sqlite-tools-linux-x64-${SQLITE_VERSION}/sqlite3 /usr/local/bin/
+          unzip sqlite-tools-linux-x64-${SQLITE_VERSION}.zip
+          ls -la
+          sudo cp sqlite3 /usr/local/bin/
           sudo chmod +x /usr/local/bin/sqlite3
           # Make sure /usr/local/bin is in PATH first
           echo "/usr/local/bin" >> $GITHUB_PATH
