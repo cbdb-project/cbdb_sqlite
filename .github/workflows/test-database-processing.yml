@@ -1,0 +1,87 @@
+name: Test Database Processing
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test-database-processing:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies (7z)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y p7zip-full unzip
+
+      - name: Install SQLite from official release
+        run: |
+          # Ubuntu's SQLite 3.45.1 has a bug causing segfaults with complex views
+          # Download official precompiled SQLite 3.50.4 instead
+          SQLITE_VERSION=3500400
+          SQLITE_YEAR=2025
+          wget https://www.sqlite.org/${SQLITE_YEAR}/sqlite-tools-linux-x64-${SQLITE_VERSION}.zip
+          unzip sqlite-tools-linux-x64-${SQLITE_VERSION}.zip
+          ls -la
+          sudo cp sqlite3 /usr/local/bin/
+          sudo chmod +x /usr/local/bin/sqlite3
+          # Make sure /usr/local/bin is in PATH first
+          echo "/usr/local/bin" >> $GITHUB_PATH
+
+      - name: Verify installations and SQLite versions
+        run: |
+          echo "=== 7z version ==="
+          7z --help | head -5
+          echo ""
+          echo "=== System sqlite3 version ==="
+          /usr/local/bin/sqlite3 --version
+          echo ""
+          echo "=== Python sqlite3 module version ==="
+          python -c "import sqlite3; print('Python sqlite3 module uses SQLite version:', sqlite3.sqlite_version)"
+
+      - name: Extract latest.7z
+        run: |
+          echo "Extracting latest.7z..."
+          7z x latest.7z
+          echo "Extraction complete."
+          ls -lh latest.db
+
+      - name: Run add_primary_keys.py
+        run: |
+          echo "Running add_primary_keys.py..."
+          python scripts/add_primary_keys.py --db latest.db
+          echo "Primary keys added successfully."
+
+      - name: Run create_views.sh
+        run: |
+          echo "Running create_views.sh..."
+          chmod +x scripts/create_views.sh
+          scripts/create_views.sh latest.db
+          echo "Views created successfully."
+
+      - name: Verify database integrity
+        run: |
+          echo "Checking database integrity..."
+          sqlite3 latest.db "PRAGMA integrity_check;"
+          echo "Verifying views exist..."
+          sqlite3 latest.db "SELECT name FROM sqlite_master WHERE type='view' ORDER BY name;"
+          echo "All checks passed!"
+
+      - name: Upload database for debugging
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-db
+          path: latest.db
+          retention-days: 7
