@@ -55,3 +55,11 @@ jobs:
           echo "Verifying views exist..."
           sqlite3 latest.db "SELECT name FROM sqlite_master WHERE type='view' ORDER BY name;"
           echo "All checks passed!"
+
+      - name: Upload database for debugging
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-db
+          path: latest.db
+          retention-days: 7
