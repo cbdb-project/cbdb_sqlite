@@ -398,7 +398,7 @@ SELECT
     assoc_person.c_name AS c_assoc_name,
     assoc_person.c_name_chn AS c_assoc_name_chn,
     entry.c_age,
-    entry.c_nianhao_id,
+    entry.c_entry_nh_id,
     nh.c_nianhao_chn,
     nh.c_nianhao_pin,
     entry.c_entry_nh_year,
@@ -415,7 +415,7 @@ SELECT
     entry_addr.c_name_chn AS c_entry_addr_chn,
     entry_addr.x_coord AS c_entry_xcoord,
     entry_addr.y_coord AS c_entry_ycoord,
-    entry.c_parental_status,
+    entry.c_parental_status_code,
     parental_codes.c_parental_status_desc,
     parental_codes.c_parental_status_desc_chn,
     entry.c_attempt_count,
@@ -439,9 +439,9 @@ LEFT JOIN KINSHIP_CODES AS kin_codes
 LEFT JOIN ASSOC_CODES AS assoc_codes
     ON assoc_codes.c_assoc_code = entry.c_assoc_code
 LEFT JOIN PARENTAL_STATUS_CODES AS parental_codes
-    ON parental_codes.c_parental_status_code = entry.c_parental_status
+    ON parental_codes.c_parental_status_code = entry.c_parental_status_code
 LEFT JOIN NIAN_HAO AS nh
-    ON nh.c_nianhao_id = entry.c_nianhao_id
+    ON nh.c_nianhao_id = entry.c_entry_nh_id
 LEFT JOIN YEAR_RANGE_CODES AS range_codes
     ON range_codes.c_range_code = entry.c_entry_range
 LEFT JOIN ADDR_CODES AS entry_addr
@@ -496,8 +496,9 @@ SELECT
     gz.c_ganzhi_py AS c_event_day_gz_py
 FROM EVENTS_ADDR AS ea
 LEFT JOIN EVENTS_DATA AS event_data
-    ON event_data.c_event_record_id = ea.c_event_record_id
-   AND event_data.c_personid = ea.c_personid
+    ON event_data.c_personid = ea.c_personid
+   AND event_data.c_sequence = ea.c_sequence
+   AND event_data.c_event_code = ea.c_event_code
 LEFT JOIN EVENT_CODES AS event_codes
     ON event_codes.c_event_code = event_data.c_event_code
 INNER JOIN BIOG_MAIN AS person
@@ -821,8 +822,8 @@ DROP VIEW IF EXISTS View_PossessionsAddrData;
 CREATE VIEW View_PossessionsAddrData AS
 SELECT
     View_PossessionsData.*,
-    ADDR_CODES.c_name AS c_addr_name,
-    ADDR_CODES.c_name_chn AS c_addr_chn
+    ADDR_CODES.c_name AS c_possession_addr_name,
+    ADDR_CODES.c_name_chn AS c_possession_addr_chn
 FROM
     View_PossessionsData
     LEFT JOIN ADDR_CODES ON View_PossessionsData.c_addr_id = ADDR_CODES.c_addr_id;
