@@ -57,12 +57,6 @@ jobs:
           echo "Extraction complete."
           ls -lh latest.db
 
-      - name: Run add_primary_keys.py
-        run: |
-          echo "Running add_primary_keys.py..."
-          python scripts/add_primary_keys.py --db latest.db
-          echo "Primary keys added successfully."
-
       - name: Run create_views.sh
         run: |
           echo "Running create_views.sh..."
