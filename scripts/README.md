@@ -7,7 +7,6 @@ This directory contains the helper scripts used to download, normalise, and comp
 ## Available Scripts
 
 - `process_cbdb_dbs.sh`: end-to-end workflow that downloads the latest and historical SQLite dumps, unpacks them, applies the normalisation helpers, vacuums the databases, and generates a schema/data summary comparison.
-- `add_primary_keys.py`: rebuilds tables that lack explicit primary keys by creating replacement tables with the desired constraints and copying data across inside a single transaction.
 - `compare_db_tables.py`: compares two SQLite databases table-by-table, emitting a report of schema and data discrepancies.
 
 ## Prerequisites

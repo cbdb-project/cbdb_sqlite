@@ -98,10 +98,6 @@ download_release "CBDB_20240820.db" \
     "https://huggingface.co/datasets/cbdb/cbdb-sqlite/resolve/main/history/CBDB_20240820/CBDB_20240820.7z.001" \
     "https://huggingface.co/datasets/cbdb/cbdb-sqlite/resolve/main/history/CBDB_20240820/CBDB_20240820.7z.002"
 
-announce "Adding primary keys"
-python3 add_primary_keys.py --db CBDB_20250520.db
-python3 add_primary_keys.py --db CBDB_20240820.db
-
 # optional: remove indexes (saves space); uncomment if preferred
 # sqlite3 CBDB_20250520.db "SELECT 'DROP INDEX IF EXISTS \"' || name || '\";' FROM sqlite_master WHERE type='index';" | sqlite3 CBDB_20250520.db
 # sqlite3 CBDB_20240820.db "SELECT 'DROP INDEX IF EXISTS \"' || name || '\";' FROM sqlite_master WHERE type='index';" | sqlite3 CBDB_20240820.db
