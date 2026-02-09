@@ -43,15 +43,6 @@
   rm latest.7z
   ```
 
-## 主键
-为节省数据集体积， cbdb_sqlite 项目中发布的 latest.7z 不包含主键、索引、视图。用户可根据使用需求添加。
-
-如需要主键，可运行 `scripts/add_primary_keys.py` 脚本添加主键如下：
-
-  ```bash
-  python3 scripts/add_primary_keys.py --db CBDB_20250520.db
-  ```
-
 ## 常见查询示例
 
 使用 `sqlite3` 交互模式快速检查数据：

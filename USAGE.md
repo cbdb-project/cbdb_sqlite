@@ -41,14 +41,6 @@ Use tools such as `pyenv` if you need to maintain multiple Python versions and c
    rm latest.7z
    ```
 
-## Primary Keys
-To keep the archive small, the `latest.7z` published by the cbdb_sqlite project does not include primary keys, indexes, or views. Add them as needed for your use cases.
-
-To add primary keys, run the `scripts/add_primary_keys.py` helper:
-```bash
-python3 scripts/add_primary_keys.py --db CBDB_20250520.db
-```
-
 ## Query Examples
 
 Use the interactive `sqlite3` shell for quick data inspection:

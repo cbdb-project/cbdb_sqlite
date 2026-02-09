@@ -5,7 +5,6 @@
 ## 脚本一览
 
 - `process_cbdb_dbs.sh`：完整流程脚本，负责下载最新与历史版 SQLite 数据库、解压、运行规范化工具、执行 `VACUUM`，并生成数据库差异报告。
-- `add_primary_keys.py`：为缺少显式主键的表重建结构，在单个事务内创建带主键的新表并复制数据。
 - `compare_db_tables.py`：逐表对比两个 SQLite 数据库的结构与数据，输出差异摘要。
 
 ## 运行前提
