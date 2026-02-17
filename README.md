@@ -1,16 +1,18 @@
 # cbdb_sqlite
 
-[**latest.7z**](https://github.com/cbdb-project/cbdb_sqlite/blob/master/latest.7z) - The latest SQLite version of the [China Biographical Database](https://projects.iq.harvard.edu/cbdb/home).
+You can download the latest SQLite release of the [China Biographical Database](https://cbdb.hsites.harvard.edu/) at the following page.
 
-You can also download it from huggingface:
+* https://huggingface.co/datasets/cbdb/cbdb-sqlite/blob/main/latest.zip
 
-https://huggingface.co/datasets/cbdb/cbdb-sqlite/blob/main/latest.7z
+----
 
-Or download the 7z directly:
+## Historical releases
 
-https://huggingface.co/datasets/cbdb/cbdb-sqlite/resolve/main/latest.7z?download=true
+For historical SQLite databases:
 
-[**latest_ZZZ_tables.7z**](https://huggingface.co/datasets/cbdb/cbdb-sqlite/blob/main/latest_ZZZ_tables.7z) - The latest SQLite version of the [China Biographical Database](https://projects.iq.harvard.edu/cbdb/home) includes pre-queried tables
+* [CBDB Hugging Face dataset](https://huggingface.co/datasets/cbdb/cbdb-sqlite/tree/main/history)
 
-You can download the history SQLite databases from the [CBDB Hugging Face account](https://huggingface.co/datasets/cbdb/cbdb-sqlite/tree/main/history)
+The released database file in GitHub repository is no longer updated.
 
+* [**latest.7z**](./latest.7z) - Last updated on 2026-02-08. 
+* [**latest_ZZZ_tables.7z**](https://huggingface.co/datasets/cbdb/cbdb-sqlite/blob/main/latest_ZZZ_tables.7z) - The latest SQLite version of the CBDB that includes de-normalized tables.
