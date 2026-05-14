@@ -312,7 +312,6 @@ SELECT
     TEXT_CODES.c_url_homepage,
     BIOG_SOURCE_DATA.c_notes AS c_notes,
     BIOG_SOURCE_DATA.c_main_source,
-    BIOG_SOURCE_DATA.c_self_bio AS c_self_bio,
     COALESCE(TEXT_CODES.c_url_api, '') || COALESCE(BIOG_SOURCE_DATA.c_pages, '') || COALESCE(TEXT_CODES.c_url_api_coda, '') AS c_hyperlink
 FROM
     TEXT_CODES
@@ -698,8 +697,7 @@ SELECT
     bm.c_created_by,
     bm.c_created_date,
     bm.c_modified_by,
-    bm.c_modified_date,
-    bm.c_self_bio
+    bm.c_modified_date
 FROM BIOG_MAIN AS bm
 LEFT JOIN INDEXYEAR_TYPE_CODES AS indexyear_codes
     ON indexyear_codes.c_index_year_type_code = bm.c_index_year_type_code
