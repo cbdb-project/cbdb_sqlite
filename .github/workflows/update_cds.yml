@@ -3,8 +3,8 @@ name: Update cbdb-data-summarization
 on:
   push:
     paths:
-      - 'latest.7z'
-  workflow_dispatch: 
+      - 'latest.json'
+  workflow_dispatch:
 
 jobs:
   workflow_dispatch:

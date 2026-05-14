@@ -5,7 +5,7 @@ name: Update NECHR
 on:
   push:
     paths:
-      - 'latest.7z'
+      - 'latest.json'
 
 jobs:
   trigger_workflow:

@@ -3,7 +3,7 @@ name: Update biog_ref
 on:
   push:
     paths:
-      - 'latest.7z'
+      - 'latest.json'
 
 jobs:
   workflow_dispatch:

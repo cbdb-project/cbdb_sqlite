@@ -1,0 +1,7 @@
+{
+  "sqlite_filename": "cbdb_20260314.sqlite3",
+  "sha256": "50366bf1234dbddbc31723d34514b2d8209bd7b857c043685387aaceec87682a",
+  "generated_at_utc": "2026-03-14T19:11:13Z",
+  "format": "sqlite3",
+  "download_url": "https://huggingface.co/datasets/cbdb/cbdb-sqlite/resolve/main/latest.zip"
+}
