@@ -7,7 +7,7 @@
 ### 一键 Notebook
 
 - **`setup_cbdb.ipynb`** — Google Colab Notebook，一键完成完整配置流程：下载最新数据库、添加外键、创建视图、生成 `ADDRESSES` 表。
-  上传至 [Google Colab](https://colab.research.google.com/) 后点击 **Runtime → Run all** 即可运行。
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1fTg-Ng1nRB1jcTe7Ii2mhUqh0OUdPPEO) — 点击直接打开，然后点击 **Runtime → Run all** 即可运行。
   每个步骤均可在 *Configuration* 单元格中通过布尔变量单独开关。
 
 ### 独立脚本

@@ -10,7 +10,7 @@ This directory contains helper scripts for downloading, post-processing, and com
 
 - **`setup_cbdb.ipynb`** — Google Colab notebook that runs the full setup pipeline in one click:
   downloads the latest database, adds foreign keys, creates views, and builds the `ADDRESSES` table.
-  Upload to [Google Colab](https://colab.research.google.com/) and click **Runtime → Run all**.
+  [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1fTg-Ng1nRB1jcTe7Ii2mhUqh0OUdPPEO) — click to open directly, then click **Runtime → Run all**.
   Each step can be toggled on or off via boolean flags in the *Configuration* cell.
 
 ### Individual scripts
