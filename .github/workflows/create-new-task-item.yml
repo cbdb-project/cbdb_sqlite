@@ -2,7 +2,7 @@ name: Create new project tasks when latest.7z updated
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - 'latest.json'
 jobs:
