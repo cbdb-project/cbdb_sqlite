@@ -1,0 +1,40 @@
+name: Sync latest.json from HuggingFace
+
+on:
+  repository_dispatch:
+    types: [hf-dataset-updated]
+  workflow_dispatch:
+
+concurrency:
+  group: sync-latest-json
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Fetch latest.json from HuggingFace
+        run: |
+          curl -sL --fail -o /tmp/hf_latest.json \
+            https://huggingface.co/datasets/cbdb/cbdb-sqlite/resolve/main/latest.json
+          python3 -c "import json; json.load(open('/tmp/hf_latest.json'))"
+          printf '%s\n' "$(cat /tmp/hf_latest.json)" > /tmp/hf_latest.json
+
+      - name: Commit if changed
+        run: |
+          if diff -q /tmp/hf_latest.json latest.json > /dev/null 2>&1; then
+            echo "latest.json is already up to date."
+            exit 0
+          fi
+          cp /tmp/hf_latest.json latest.json
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add latest.json
+          git commit -m "Sync latest.json from HuggingFace"
+          git push origin HEAD:master
