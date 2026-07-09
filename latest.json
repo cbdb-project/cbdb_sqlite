@@ -1,7 +1,8 @@
 {
-  "sqlite_filename": "cbdb_20260314.sqlite3",
-  "sha256": "50366bf1234dbddbc31723d34514b2d8209bd7b857c043685387aaceec87682a",
-  "generated_at_utc": "2026-03-14T19:11:13Z",
+  "sqlite_filename": "cbdb_20260704.sqlite3",
+  "sha256": "6b18f1e7f90a823d8dde5ecbd8a9eac70f092fe643efb8dca193986949a913df",
+  "generated_at_utc": "2026-07-04T19:12:34Z",
   "format": "sqlite3",
-  "download_url": "https://huggingface.co/datasets/cbdb/cbdb-sqlite/resolve/main/latest.zip"
+  "huggingface_path": "history/cbdb_202607/cbdb_20260704.zip",
+  "huggingface_url": "https://huggingface.co/datasets/cbdb/cbdb-sqlite/resolve/main/history/cbdb_202607/cbdb_20260704.zip"
 }
