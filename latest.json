@@ -1,8 +1,8 @@
 {
-  "sqlite_filename": "cbdb_20260711.sqlite3",
-  "sha256": "37b18c9807d7547640d9f236c50f831f71d9f7d7c80f7064bb444341c0c8e9b9",
-  "generated_at_utc": "2026-07-11T19:17:06Z",
+  "sqlite_filename": "cbdb_20260718.sqlite3",
+  "sha256": "d685e4c283456c3a4d10e6b3007bf6208cbfab42eefe6a3188a78b516dcf22b5",
+  "generated_at_utc": "2026-07-18T19:14:07Z",
   "format": "sqlite3",
-  "huggingface_path": "history/cbdb_202607/cbdb_20260711.zip",
-  "huggingface_url": "https://huggingface.co/datasets/cbdb/cbdb-sqlite/resolve/main/history/cbdb_202607/cbdb_20260711.zip"
+  "huggingface_path": "history/cbdb_202607/cbdb_20260718.zip",
+  "huggingface_url": "https://huggingface.co/datasets/cbdb/cbdb-sqlite/resolve/main/history/cbdb_202607/cbdb_20260718.zip"
 }
