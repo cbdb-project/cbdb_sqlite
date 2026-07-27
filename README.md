@@ -13,7 +13,7 @@ Use the scripts in [`scripts/`](./scripts/) to add them, or run the one-click Co
 
 | What you want | How to get it |
 |---------------|---------------|
-| Everything in one click | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1fTg-Ng1nRB1jcTe7Ii2mhUqh0OUdPPEO) |
+| Everything in one click | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/cbdb-project/cbdb_sqlite/blob/master/scripts/setup_cbdb.ipynb) |
 | Foreign key constraints | `python scripts/add_foreign_keys.py --db latest.db` |
 | 18 convenience views | `bash scripts/create_views.sh latest.db` |
 | `ADDRESSES` hierarchy table | `python scripts/create_addresses_table.py --db latest.db` |
