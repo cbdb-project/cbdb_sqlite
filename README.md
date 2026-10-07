@@ -33,3 +33,7 @@ For historical SQLite databases:
 The released database file in GitHub repository is no longer updated.
 
 * [**latest_ZZZ_tables.7z**](https://huggingface.co/datasets/cbdb/cbdb-sqlite/blob/main/latest_ZZZ_tables.7z) - The latest SQLite version of the CBDB that includes de-normalized tables.
+
+## License
+
+The CBDB data is subject to the [CBDB Data Licensing Terms](https://cbdb.hsites.harvard.edu/cbdb-data-licensing-terms) (the same terms declared on the [Hugging Face dataset](https://huggingface.co/datasets/cbdb/cbdb-sqlite)). The scripts in this repository are licensed under [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). See [LICENSE.md](./LICENSE.md) for details.
